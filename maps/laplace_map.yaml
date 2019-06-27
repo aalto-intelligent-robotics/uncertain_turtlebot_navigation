@@ -1,0 +1,7 @@
+image: laplace_map.png
+resolution: 0.050000
+origin: [-30.400000, -32.000000, 0.000000]
+negate: 0
+occupied_thresh: 0.75
+free_thresh: 0.02
+mode: scale

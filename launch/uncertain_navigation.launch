@@ -1,0 +1,25 @@
+<launch>
+  <!-- Map server -->
+  <arg name="uncertainty" default="laplace" /> <!-- laplace, gaussian, mcdropout -->
+  <arg name="map_file" default="$(find uncertain_turtlebot_navigation)/maps/slam_map.yaml"/>
+  <arg name="uncertainty_map_file" default="$(find uncertain_turtlebot_navigation)/maps/$(arg uncertainty)_map.yaml"/>
+  
+  <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
+  <node name="uncertainty_map_server" pkg="map_server" type="map_server" args="$(arg uncertainty_map_file)">
+    <remap from="map" to="uncertainty_map"/>
+    <remap from="map_metadata" to="uncertainty_map_metadata"/>
+  </node>
+
+  <!-- Localization -->
+  <node name="localization" pkg="fake_localization" type="fake_localization">
+    <remap from="base_pose_ground_truth" to="odom"/>
+  </node>
+
+  <!-- Move base -->
+  <include file="$(find uncertain_turtlebot_navigation)/launch/includes/move_base.launch.xml">
+    <arg name="global_costmap_type" value="uncertainty" />
+  </include>
+
+  <!-- Visualization -->
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find turtlebot_rviz_launchers)/rviz/navigation.rviz"/>
+</launch>

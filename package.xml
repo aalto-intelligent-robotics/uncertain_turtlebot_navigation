@@ -1,13 +1,13 @@
 <package>
   <name>uncertain_turtlebot_navigation</name>
   <version>2.3.7</version>
-  <description>uncertain_turtlebot_navigation</description>
-  <maintainer email="turtlebot@osrfoundation.org">OSRF</maintainer>
+  <description>A turtlebot navigation simulation in Gazebo using uncertainty maps</description>
+  <maintainer email="francesco.verdoja@aalto.fi">Francesco Verdoja</maintainer>
   <license>BSD</license>
   <url type="website">http://ros.org/wiki/turtlebot_navigation</url>
-  <url type="repository">https://github.com/turtlebot/turtlebot_apps</url>
-  <url type="bugtracker">https://github.com/turtlebot/turtlebot_apps/issues</url>
-  <author>Tully Foote</author>
+  <url type="repository">https://version.aalto.fi/gitlab/irobotics/uncertain-turtle-navigation</url>
+  <url type="bugtracker">https://version.aalto.fi/gitlab/irobotics/uncertain-turtle-navigation/issues</url>
+  <author>Francesco Verdoja</author>
 
   <buildtool_depend>catkin</buildtool_depend>
   
@@ -23,6 +23,7 @@
   <run_depend>amcl</run_depend>
   <run_depend>gmapping</run_depend>
   <run_depend>turtlebot_bringup</run_depend>
+  <run_depend>turtlebot_gazebo</run_depend>
   <run_depend>dwa_local_planner</run_depend>
 
   <export>

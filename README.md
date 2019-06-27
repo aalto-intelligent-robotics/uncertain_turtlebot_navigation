@@ -1,4 +1,4 @@
-# uncertain-turtle-navigation
+# uncertain_turtlebot_navigation
 
 A turtlebot navigation simulation in Gazebo using uncertainty maps.
 
@@ -9,7 +9,7 @@ A turtlebot navigation simulation in Gazebo using uncertainty maps.
 *  First, you need to start a simulated turtlebot in an empty gazebo 
    environment:
    
-   `roslaunch uncertain-turtle-navigation turtlebot-sim-empty.launch`
+   `roslaunch uncertain_turtlebot_navigation turtlebot-sim-empty.launch`
    
    If you don't want the gazebo gui to launch, add ` gui:=false`.
 
@@ -17,11 +17,11 @@ A turtlebot navigation simulation in Gazebo using uncertainty maps.
   
   * For normal slam navigation:
   
-    `roslaunch uncertain-turtle-navigation slam_navigation.launch`
+    `roslaunch uncertain_turtlebot_navigation slam_navigation.launch`
 
   * For uncertain navigation:
     
-    `roslaunch uncertain-turtle-navigation uncertain_navigation.launch`
+    `roslaunch uncertain_turtlebot_navigation uncertain_navigation.launch`
     
     The default uncertainty map in this case will be the one using a Laplace
     model, in alternative you can use the argument

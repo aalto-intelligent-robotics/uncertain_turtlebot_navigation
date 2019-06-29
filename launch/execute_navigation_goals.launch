@@ -1,0 +1,17 @@
+<launch>
+  <arg name="map_file" default="$(find uncertain_turtlebot_navigation)/maps/slam_map.yaml" />
+  <arg name="n_iterations" default="10" />
+  <arg name="seed" default="0" />
+  <arg name="trajectory_save_dir" default="$(find uncertain_turtlebot_navigation)/trajectories/" />
+  <arg name="trajectory_file_name" default="trajectory" />
+  <arg name="goals_file_path" default="$(find uncertain_turtlebot_navigation)/maps/goals" />
+  
+  <node name="execute_navigation_goals" pkg="uncertain_turtlebot_navigation"
+        type="execute_navigation_goals" output="screen">
+    <param name="n_iterations" value="$(arg n_iterations)" />
+    <param name="seed" value="$(arg seed)" />
+    <param name="trajectory_save_dir" value="$(arg trajectory_save_dir)" />
+    <param name="trajectory_file_name" value="$(arg trajectory_file_name)" />
+    <param name="goals_file_path" value="$(arg goals_file_path)" />
+  </node>
+</launch>

@@ -26,7 +26,7 @@ PointVector readXYCoordinates(string file_path, string delimiter = " ")
   PointVector points;
   geometry_msgs::Point p;
   string line;
-  string::size_type sz; // alias of size_t
+  std::size_t sz;
   std::ifstream file(file_path);
 
   ROS_ASSERT_MSG(file.is_open(), "File %s could not be found or opened.", file_path.c_str());
@@ -109,6 +109,8 @@ void writePath(PathPtr path_ptr, string file_path, string delimiter = " ")
 int main(int argc, char **argv)
 {
   ros::init(argc, argv, "execute_navigation_goals");
+  ros::NodeHandle nh;
+  ros::NodeHandle private_nh("~");
 
   // tell the action client that we want to spin a thread by default
   MoveBaseClient ac("move_base", true);
@@ -117,24 +119,30 @@ int main(int argc, char **argv)
   while (!ac.waitForServer(ros::Duration(5.0)))
     ROS_INFO("Waiting for the move_base action server to come up");
 
-  unsigned int n_iterations = 2;
-  unsigned int seed = 15;
-  string dir_path = "./";
-  string file_name = "trajectory";
-  string file_path = dir_path + file_name;
-  string goals_file_path = "/home/fverdoja/turtle_ws/src/uncertain_turtlebot_navigation/maps/goals";
+  int n_iterations, seed;
+  string trajectory_save_dir, trajectory_file_name, goals_file_path, frame_id, trajectory_topic;
+
+  private_nh.param("n_iterations", n_iterations, 10);
+  private_nh.param("seed", seed, (int)std::time(NULL));
+  private_nh.param("trajectory_save_dir", trajectory_save_dir, std::string("./"));
+  private_nh.param("trajectory_file_name", trajectory_file_name, std::string("trajectory"));
+  private_nh.param("goals_file_path", goals_file_path, std::string("./goals"));
+  private_nh.param("frame_id", frame_id, std::string("/map"));
+  private_nh.param("trajectory_topic", trajectory_topic, std::string("/move_base/NavfnROS/plan"));
+
   PathPtr path_ptr;
   PointVector goal_points = readXYCoordinates(goals_file_path);
   PointVector goal_point_seq = randomPointSeq(goal_points, n_iterations, seed);
+  string trajectory_file_path = trajectory_save_dir + trajectory_file_name;
 
   move_base_msgs::MoveBaseGoal goal;
-  goal.target_pose.header.frame_id = "map";
+  goal.target_pose.header.frame_id = frame_id;
   goal.target_pose.pose.orientation.w = 1.0; // all goals will have the same orientation
 
   int i = 0;
   for (PointVector::const_iterator pt = goal_point_seq.begin(); pt != goal_point_seq.end(); ++pt)
   {
-    string file_path_i = file_path + "_" + std::to_string(i);
+    string trajectory_file_path_i = trajectory_file_path + "_" + std::to_string(i);
 
     goal.target_pose.header.stamp = ros::Time::now();
     goal.target_pose.pose.position = *pt;
@@ -142,13 +150,13 @@ int main(int argc, char **argv)
     ROS_INFO("Sending goal n. %d", i);
     ac.sendGoal(goal);
 
-    path_ptr = ros::topic::waitForMessage<nav_msgs::Path>("/move_base/NavfnROS/plan", ros::Duration(10));
+    path_ptr = ros::topic::waitForMessage<nav_msgs::Path>(trajectory_topic, ros::Duration(10));
     if (path_ptr == NULL)
       ROS_WARN("No path messages received");
     else
     {
-      ROS_INFO("Path received. Writing to %s", file_path_i.c_str());
-      writePath(path_ptr, file_path_i);
+      ROS_INFO("Path received. Writing to %s", trajectory_file_path_i.c_str());
+      writePath(path_ptr, trajectory_file_path_i);
     }
 
     ac.waitForResult();

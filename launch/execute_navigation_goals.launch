@@ -1,5 +1,4 @@
 <launch>
-  <arg name="map_file" default="$(find uncertain_turtlebot_navigation)/maps/slam_map.yaml" />
   <arg name="n_iterations" default="10" />
   <arg name="seed" default="0" />
   <arg name="trajectory_save_dir" default="$(find uncertain_turtlebot_navigation)/trajectories/" />

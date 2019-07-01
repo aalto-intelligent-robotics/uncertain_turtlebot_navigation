@@ -124,11 +124,11 @@ int main(int argc, char **argv)
 
   private_nh.param("n_iterations", n_iterations, 10);
   private_nh.param("seed", seed, (int)std::time(NULL));
-  private_nh.param("trajectory_save_dir", trajectory_save_dir, std::string("./"));
-  private_nh.param("trajectory_file_name", trajectory_file_name, std::string("trajectory"));
-  private_nh.param("goals_file_path", goals_file_path, std::string("./goals"));
-  private_nh.param("frame_id", frame_id, std::string("/map"));
-  private_nh.param("trajectory_topic", trajectory_topic, std::string("/move_base/NavfnROS/plan"));
+  private_nh.param("trajectory_save_dir", trajectory_save_dir, string("./"));
+  private_nh.param("trajectory_file_name", trajectory_file_name, string("trajectory"));
+  private_nh.param("goals_file_path", goals_file_path, string("./goals"));
+  private_nh.param("frame_id", frame_id, string("/map"));
+  private_nh.param("trajectory_topic", trajectory_topic, string("/move_base/NavfnROS/plan"));
 
   PathPtr path_ptr;
   PointVector goal_points = readXYCoordinates(goals_file_path);

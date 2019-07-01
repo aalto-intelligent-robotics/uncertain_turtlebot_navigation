@@ -33,4 +33,4 @@ A turtlebot navigation simulation in Gazebo using uncertainty maps.
   
   `roslaunch uncertain_turtlebot_navigation execute_navigation_goals.launch`
 
-
+* Once you have run the navigation and stored the trajectories in the folder /data/trajectories, you can analyze the results, that is compute the number of collisions that occured, by running the script calculate_collisions in the matlab folder.

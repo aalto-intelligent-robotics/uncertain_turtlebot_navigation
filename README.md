@@ -28,7 +28,7 @@ A turtlebot navigation simulation in Gazebo using uncertainty maps.
     `uncertainty:={laplace|gaussian|mcdropout}` to select the uncertainty map to
     be used.
 
-* Now you can either plan setting navigation goals through rviz or by executing a
+* Now you can either plan by setting navigation goals through rviz or by executing a
   set of sample navigation goals by using:
   
   `roslaunch uncertain_turtlebot_navigation execute_navigation_goals.launch`

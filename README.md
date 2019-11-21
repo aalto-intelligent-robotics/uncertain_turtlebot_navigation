@@ -4,7 +4,7 @@ A turtlebot navigation simulation in Gazebo using uncertainty maps.
 
 The uncertainty maps used in this demo environment are constructed according to:
 
-J. Lundell, F. Verdoja, and V. Kyrki, “Deep Network Uncertainty Maps for Indoor
+F. Verdoja, J. Lundell, and V. Kyrki, “Deep Network Uncertainty Maps for Indoor
 Navigation,” arXiv:1809.04891 [cs, eess], Sep. 2018. 
 
 Please refer to that paper for more details about the map building process.
